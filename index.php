@@ -53,6 +53,7 @@ $tasks = [
 ];
 
 $page_main = template_render('templates/index.php', [
+    'projects' => $projects,
     'tasks' => $tasks
 ]);
 
