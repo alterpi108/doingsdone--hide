@@ -83,19 +83,27 @@
 
     <h2 class="modal__heading">Вход на сайт</h2>
 
-    <form class="form" class="" action="index.php" method="POST">
+    <form class="form" action="index.php?login" method="POST">
         <div class="form__row">
             <label class="form__label" for="email">E-mail <sup>*</sup></label>
 
-            <input class="form__input form__input--error" type="text" name="email" id="email" value="" placeholder="Введите e-mail">
+            <input class="form__input <?php if ($email_error) print('form__input--error'); ?>"
+                   type="text" name="email" id="email" value="<?= $email ?>" placeholder="Введите e-mail">
 
-            <p class="form__message">E-mail введён некорректно</p>
+            <?php if ($email_error): ?>
+                <p class="form__message">E-mail введён некорректно</p>
+            <?php endif; ?>
         </div>
 
         <div class="form__row">
             <label class="form__label" for="password">Пароль <sup>*</sup></label>
 
-            <input class="form__input" type="password" name="password" id="password" value="" placeholder="Введите пароль">
+            <input class="form__input <?php if ($password_error) print('form__input--error'); ?>"
+                   type="password" name="password" id="password" value="" placeholder="Введите пароль">
+
+            <?php if ($password_error): ?>
+                <p class="form__message">Вы ввели неверный пароль</p>
+            <?php endif; ?>
         </div>
 
         <div class="form__row">

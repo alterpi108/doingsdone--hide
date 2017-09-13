@@ -12,29 +12,59 @@ date_default_timezone_set('Europe/Moscow');
 $current_ts = strtotime('now midnight');
 
 
+session_start();
 
-
-
-
-
-if (!isset($_SESSION['user'])) {
+if (! isset($_SESSION['user'])) {
     $modal = false;
+    $email_error = false;
+    $password_error = false;
+    $email = '';
+
     if (isset($_GET['login'])) {
         $modal = true;
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $email = trim($_POST['email']);
+            $password = trim($_POST['password']);
+            $hashed = password_hash($password, PASSWORD_DEFAULT);
+            $name = null;
+
+            if (!$email) {
+                $email_error = true;
+            } else {
+                $users = include 'userdata.php';
+
+                foreach ($users as $user) {
+                    if ($user['email'] == $email && password_verify($password, $user['password'])) {
+                        $name = $user['name'];
+                        break;
+                    }
+                }
+
+                if ($name == null) {
+                    $modal = true;
+                    $password_error = true;
+                } else {
+                    $_SESSION['user'] = $name;
+                    header('Location: index.php?fmefeifmi');
+                }
+            }
+        }
     }
 
     $page = template_render('templates/guest.php', [
-        'modal' => $modal
+        'modal' => $modal,
+        'email_error' => $email_error,
+        'password_error' => $password_error,
+        'email' => $email
     ]);
+
     print($page);
     die();
 }
 
 
-
-
-
-
+$user = $_SESSION['user'];
 
 
 
@@ -158,7 +188,8 @@ $page = template_render('templates/layout.php', [
     'tasks' => $tasks,
     'page_main' => $page_main,
     'overlay' => $overlay,
-    'modal' => $modal
+    'modal' => $modal,
+    'user' => $user
 ]);
 
 print($page);
