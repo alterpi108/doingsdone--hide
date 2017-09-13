@@ -79,8 +79,6 @@ if ($_COOKIE['show_completed'] == '1') {
     $show_completed = 1;
 }
 
-print($_COOKIE['show_completed']."--\n\n");
-
 $projects = ['Все', 'Входящие', 'Учеба', 'Работа', 'Домашние дела', 'Авто'];
 
 $tasks = [
