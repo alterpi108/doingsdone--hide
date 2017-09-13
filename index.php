@@ -11,6 +11,33 @@ date_default_timezone_set('Europe/Moscow');
 // текущая метка времени
 $current_ts = strtotime('now midnight');
 
+
+
+
+
+
+
+if (!isset($_SESSION['user'])) {
+    $modal = false;
+    if (isset($_GET['login'])) {
+        $modal = true;
+    }
+
+    $page = template_render('templates/guest.php', [
+        'modal' => $modal
+    ]);
+    print($page);
+    die();
+}
+
+
+
+
+
+
+
+
+
 $projects = ['Все', 'Входящие', 'Учеба', 'Работа', 'Домашние дела', 'Авто'];
 
 $tasks = [
