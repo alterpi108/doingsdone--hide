@@ -1,3 +1,12 @@
+/* PhpStorm */
+-- noinspection SqlDialectInspectionForFile
+-- noinspection SqlNoDataSourceInspectionForFile
+
+
+CREATE DATABASE doingsdone
+  DEFAULT CHARACTER SET utf8;
+
+
 CREATE TABLE project (
     id   INT AUTO_INCREMENT PRIMARY KEY,
     user INT         NOT NULL,    /* пользователь, создавший проект */
@@ -17,12 +26,9 @@ CREATE TABLE task (
 
 CREATE TABLE user (
     id       INT AUTO_INCREMENT PRIMARY KEY,
-    reg_date DATETIME     NOT NULL,
+    reg_date DATETIME     NOT NULL   DEFAULT NOW(),
     name     VARCHAR(256) NOT NULL,
     email    VARCHAR(256) NOT NULL,
     password CHAR(60)     NOT NULL,    /* хешированный */
     contacts VARCHAR(1024)
 );
-
-/* CREATE UNIQUE INDEX email ON user(email); -- не нужно, потому что задан PRIMARY KEY */
-
