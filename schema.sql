@@ -3,25 +3,35 @@
 -- noinspection SqlNoDataSourceInspectionForFile
 
 
+/**************
+ *  DATABASE  *
+ **************/
+
 CREATE DATABASE doingsdone
   DEFAULT CHARACTER SET utf8;
 
+USE doingsdone;
+
+
+/************
+ *  TABLES  *
+ ************/
 
 CREATE TABLE project (
     id   INT AUTO_INCREMENT PRIMARY KEY,
-    user INT         NOT NULL,    /* пользователь, создавший проект */
+    user INT         NOT NULL,  -- пользователь, создавший проект
     name VARCHAR(60) NOT NULL
 );
 
 CREATE TABLE task (
-    id          INT AUTO_INCREMENT PRIMARY KEY,
-    user        INT NOT NULL,    /* пользователь, создавший задачу */
-    project     INT NOT NULL,    /* к какому проекту принадлежит */
+    id          INT  AUTO_INCREMENT PRIMARY KEY,
+    user        INT  NOT NULL,  -- пользователь, создавший задачу
+    project     INT  NOT NULL,  -- к какому проекту принадлежит
     name        VARCHAR(256) NOT NULL,
-    is_finished BOOLEAN DEFAULT FALSE,  /* в спецификации этого поля нет, но оно же должно быть */
-    created     DATETIME     NOT NULL  DEFAULT NOW(),
-    finished    DATETIME,
-    deadline    DATETIME,
+    is_finished BOOLEAN  DEFAULT FALSE,  -- в спецификации этого поля нет, но оно же должно быть
+    created     DATE,
+    finished    DATE,
+    deadline    DATE,
     file        VARCHAR(1024)
 );
 
@@ -30,6 +40,6 @@ CREATE TABLE user (
     reg_date DATETIME     NOT NULL   DEFAULT NOW(),
     name     VARCHAR(256) NOT NULL,
     email    VARCHAR(256) NOT NULL,
-    password CHAR(60)     NOT NULL,    /* хешированный */
+    password CHAR(60)     NOT NULL,  -- хешированный
     contacts VARCHAR(1024)
 );
