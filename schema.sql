@@ -14,14 +14,15 @@ CREATE TABLE project (
 );
 
 CREATE TABLE task (
-    id       INT AUTO_INCREMENT PRIMARY KEY,
-    user     INT NOT NULL,    /* пользователь, создавший задачу */
-    project  INT NOT NULL,    /* к какому проекту принадлежит */
-    name     VARCHAR(256) NOT NULL,
-    created  DATETIME     NOT NULL,
-    finished DATETIME,
-    deadline DATETIME,
-    file     VARCHAR(1024)
+    id          INT AUTO_INCREMENT PRIMARY KEY,
+    user        INT NOT NULL,    /* пользователь, создавший задачу */
+    project     INT NOT NULL,    /* к какому проекту принадлежит */
+    name        VARCHAR(256) NOT NULL,
+    is_finished BOOLEAN DEFAULT FALSE,  /* в спецификации этого поля нет, но оно же должно быть */
+    created     DATETIME     NOT NULL  DEFAULT NOW(),
+    finished    DATETIME,
+    deadline    DATETIME,
+    file        VARCHAR(1024)
 );
 
 CREATE TABLE user (

@@ -20,7 +20,6 @@ INSERT INTO user SET name = 'Роман',
                      password = '$2y$10$pPr7toZvGPe6X6VqeTUxxu42/M2DZHReJoDjCKKMihTiN5au6lZOC';
 
 
-
 /* Добавлю пока проекты для пользователя Роман.
 
    Пока непонятна работа с проектами. Какие проекты должны быть по умолчанию
@@ -34,16 +33,33 @@ INSERT INTO project SET user = 4, name = "Домашние дела";
 INSERT INTO project SET user = 4, name = "Авто";
 
 
+/* Все задачи только для пользователя Роман. */
 
+INSERT INTO task SET user = 4,
+                     project = 4,
+                     name = 'Собеседование в IT компании',
+                     deadline = '2018-06-01 00:00:00';
 
+INSERT INTO task SET user = 4,
+                     project = 4,
+                     name = 'Выполнить тестовое задание',
+                     deadline = '2018-05-25 00:00:00';
 
+INSERT INTO task SET user = 4,
+                     project = 3,
+                     name = 'Сделать задание первого раздела',
+                     is_finished = TRUE,
+                     deadline = '2018-04-21 00:00:00';
 
+INSERT INTO task SET user = 4,
+                     project = 2,
+                     name = 'Встреча с другом',
+                     deadline = '2018-04-22 00:00:00';
 
+INSERT INTO task SET user = 4,
+                     project = 5,
+                     name = 'Купить корм для кота';
 
-
-
-CREATE TABLE project (
-    id   INT AUTO_INCREMENT PRIMARY KEY,
-    user INT         NOT NULL,    /* пользователь, создавший проект */
-    name VARCHAR(60) NOT NULL
-);
+INSERT INTO task SET user = 4,
+                     project = 5,
+                     name = 'Заказать пиццу';
