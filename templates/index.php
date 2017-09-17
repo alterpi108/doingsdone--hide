@@ -30,10 +30,9 @@
     </div>
 
     <label class="checkbox">
-        <!--добавить сюда аттрибут "checked", если переменная $show_complete_tasks равна единице-->
         <input id="show-complete-tasks" class="checkbox__input visually-hidden" type="checkbox"
-            <?php if (0) print('checked'); // на будущее ?>>
-        <span class="checkbox__text">Показывать выполненные</span>
+            <?php if ($show_completed) print('checked'); ?>>
+            <span class="checkbox__text">Показывать выполненные</span>
     </label>
 </div>
 
@@ -44,6 +43,10 @@
     foreach ($tasks as $task):
 
         if ($id != 0 && $task['Категория'] != $projects[$id]) {
+            continue;
+        }
+
+        if ($task['Выполнен'] === 'Да' && ! $show_completed) {
             continue;
         }
     ?>

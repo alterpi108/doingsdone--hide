@@ -2,17 +2,16 @@
 
 include 'functions.php';
 
-// показывать или нет выполненные задачи
-//$show_complete_tasks = rand(0, 1);
-
 // устанавливаем часовой пояс в Московское время
 date_default_timezone_set('Europe/Moscow');
-
 // текущая метка времени
 $current_ts = strtotime('now midnight');
 
-
 session_start();
+
+
+/* Если НЕ зарегистрированный пользователь,
+   выполнить следующий блок кода и завершиться. */
 
 if (! isset($_SESSION['user'])) {
     $modal = false;
@@ -64,9 +63,21 @@ if (! isset($_SESSION['user'])) {
 }
 
 
+/* Если зарегистрированный пользователь,
+   выполнить следующие куски кода. */
+
 $user = $_SESSION['user'];
 
+if (isset($_GET['show_completed'])) {
+    setcookie('show_completed', $_GET['show_completed'], strtotime('+30 days'));
+    header('Location: index.php');
+}
 
+$show_completed = 0;
+
+if ($_COOKIE['show_completed'] == '1') {
+    $show_completed = 1;
+}
 
 $projects = ['Все', 'Входящие', 'Учеба', 'Работа', 'Домашние дела', 'Авто'];
 
@@ -157,7 +168,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $page_main = template_render('templates/index.php', [
     'projects' => $projects,
-    'tasks' => $tasks
+    'tasks' => $tasks,
+    'show_completed' => $show_completed
 ]);
 
 
