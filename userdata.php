@@ -1,7 +1,7 @@
 <?php
 
 // пользователи для аутентификации
-$users = [
+return [
     [
         'email' => 'ignat.v@gmail.com',
         'name' => 'Игнат',
@@ -16,5 +16,10 @@ $users = [
         'email' => 'warrior07@mail.ru',
         'name' => 'Руслан',
         'password' => '$2y$10$2OxpEH7narYpkOT1H5cApezuzh10tZEEQ2axgFOaKW.55LxIJBgWW'
+    ],
+    [
+        'email' => 'mosceo@gmail.com',
+        'name' => 'Роман',
+        'password' => '$2y$10$pPr7toZvGPe6X6VqeTUxxu42/M2DZHReJoDjCKKMihTiN5au6lZOC'
     ]
 ];
