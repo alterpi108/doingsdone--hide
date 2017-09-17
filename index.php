@@ -60,6 +60,28 @@ $tasks = [
         'Выполнен' => 'Нет'
     ]
 ];
+
+
+/*
+ * ЗАДАНИЕ 9
+ */
+
+function count_tasks($tasks, $project)
+{
+    if ($project === 'Все') {
+        return sizeof($tasks);
+    }
+
+    $count = 0;
+
+    foreach ($tasks as $task) {
+        if ($task['Категория'] === $project) {
+            $count++;
+        }
+    }
+
+    return $count;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -115,7 +137,7 @@ $tasks = [
                         <?php foreach ($projects as $num => $project): ?>
                             <li class="main-navigation__list-item <?php if ($num == 0) print("main-navigation__list-item--active"); ?>">
                                 <a class="main-navigation__list-item-link" href="#"><?= $project ?></a>
-                                <span class="main-navigation__list-item-count">0</span>
+                                <span class="main-navigation__list-item-count"><?= count_tasks($tasks, $project) ?></span>
                             </li>
                         <?php endforeach; ?>
                     </ul>
@@ -239,7 +261,7 @@ $tasks = [
                         </tr>
 
                     <?php endforeach; ?>
-                    
+
                 </table>
             </main>
         </div>
