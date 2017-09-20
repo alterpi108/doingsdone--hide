@@ -11,6 +11,13 @@ function template_render($path, $data)
     return $result;
 }
 
+/**
+ * Складывает два числа.
+ *
+ * @param Task[] $a
+ * @param Project $b
+ * @return integer
+ */
 function count_tasks($tasks, $project)
 {
     if ($project === 'Все') {
