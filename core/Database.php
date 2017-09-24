@@ -254,6 +254,7 @@ class Database
 
     public static function switchTaskDone($taskId)
     {
+        // TODO: дата завершения не устанавливается
         $statement = static::$pdo->prepare("UPDATE task SET done=IF(done, 0, 1) WHERE id=?");
         $statement->bindParam(1, $taskId, PDO::PARAM_INT);
         $statement->execute();

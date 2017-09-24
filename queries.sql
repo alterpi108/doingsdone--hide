@@ -24,64 +24,8 @@ INSERT INTO user SET name = 'Роман',
                      password = '$2y$10$pPr7toZvGPe6X6VqeTUxxu42/M2DZHReJoDjCKKMihTiN5au6lZOC';
 
 
--- Добавлю пока проекты для пользователя Роман.
--- Пока непонятна работа с проектами. Какие проекты должны быть по умолчанию
--- у нового пользователя. К примеру, проект "Все" должен точно быть.
-INSERT INTO project SET user = 4, name = "Все";
+-- Проект "Входищие" появляется у нового пользователя по умолчанию
+INSERT INTO project SET user = 1, name = "Входящие";
+INSERT INTO project SET user = 2, name = "Входящие";
+INSERT INTO project SET user = 3, name = "Входящие";
 INSERT INTO project SET user = 4, name = "Входящие";
-INSERT INTO project SET user = 4, name = "Учеба";
-INSERT INTO project SET user = 4, name = "Работа";
-INSERT INTO project SET user = 4, name = "Домашние дела";
-INSERT INTO project SET user = 4, name = "Авто";
-
-
--- Все задачи только для пользователя Роман.
-INSERT INTO task SET user = 4,
-                     project = 4,
-                     name = 'Собеседование в IT компании',
-                     deadline = '2018-06-01';
-
-INSERT INTO task SET user = 4,
-                     project = 4,
-                     name = 'Выполнить тестовое задание',
-                     deadline = '2018-05-25';
-
-INSERT INTO task SET user = 4,
-                     project = 3,
-                     name = 'Сделать задание первого раздела',
-                     is_finished = TRUE,
-                     deadline = '2018-04-21';
-
-INSERT INTO task SET user = 4,
-                     project = 2,
-                     name = 'Встреча с другом',
-                     deadline = '2018-04-22';
-
-INSERT INTO task SET user = 4,
-                     project = 5,
-                     name = 'Купить корм для кота';
-
-INSERT INTO task SET user = 4,
-                     project = 5,
-                     name = 'Заказать пиццу';
-
-
-/**********
- *  CRUD  *
- **********/
-
--- получить список из всех проектов для одного пользователя
-SELECT * FROM project WHERE user = 4;
-
--- получить список из всех задач для одного проекта
-SELECT * FROM task WHERE user = 4 AND project = 4;
-
--- пометить задачу как выполненную
-UPDATE task SET is_finished = TRUE WHERE id = 1000;
-
--- получить все задачи для завтрашнего дня
--- (! трудно понять, что тут требуется, по дедлайну искать или по другому полю)
-SELECT * FROM task WHERE deadline >= NOW() + INTERVAL 1 DAY AND deadline < NOW() + INTERVAL 2 DAY;
-
--- обновить название задачи по её идентификатору
-UPDATE task SET name = 'Постирать носки' WHERE id = 1000;

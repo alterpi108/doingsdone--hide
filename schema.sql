@@ -19,7 +19,7 @@ USE doingsdone;
 
 CREATE TABLE project (
     id    INT AUTO_INCREMENT PRIMARY KEY,
-    user  INT         NOT NULL,  -- пользователь, создавший проект
+    user  INT         NOT NULL,
     name  VARCHAR(60) NOT NULL,
     count INT         NOT NULL  DEFAULT 0
 );
