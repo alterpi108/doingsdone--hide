@@ -76,8 +76,7 @@
                         foreach($tasks as $task) {
                             $done = (bool) $task['done'];
                             $deadline = $task['deadline'] ? $task['deadline'] : '&mdash;';
-                            $important = ($dateNow === $deadline);
-
+                            $important = date('d-m-Y') === date('d-m-Y', (strtotime($deadline)));
 
 
                     ?>
