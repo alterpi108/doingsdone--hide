@@ -18,20 +18,21 @@ USE doingsdone;
  ************/
 
 CREATE TABLE project (
-    id   INT AUTO_INCREMENT PRIMARY KEY,
-    user INT         NOT NULL,  -- пользователь, создавший проект
-    name VARCHAR(60) NOT NULL
+    id    INT AUTO_INCREMENT PRIMARY KEY,
+    user  INT         NOT NULL,  -- пользователь, создавший проект
+    name  VARCHAR(60) NOT NULL,
+    count INT         NOT NULL  DEFAULT 0
 );
 
 CREATE TABLE task (
     id          INT  AUTO_INCREMENT PRIMARY KEY,
-    user        INT  NOT NULL,  -- пользователь, создавший задачу
-    project     INT  NOT NULL,  -- к какому проекту принадлежит
+    user        INT  NOT NULL,
+    project     INT  NOT NULL,
     name        VARCHAR(256) NOT NULL,
-    is_finished BOOLEAN  DEFAULT FALSE,  -- в спецификации этого поля нет, но оно же должно быть
-    created     DATE,
-    finished    DATE,
-    deadline    DATE,
+    done        BOOLEAN  DEFAULT FALSE,
+    created     DATETIME DEFAULT NOW(),
+    deadline    DATETIME,
+    finished    DATETIME,
     file        VARCHAR(1024)
 );
 
@@ -40,6 +41,8 @@ CREATE TABLE user (
     reg_date DATETIME     NOT NULL   DEFAULT NOW(),
     name     VARCHAR(256) NOT NULL,
     email    VARCHAR(256) NOT NULL,
-    password CHAR(60)     NOT NULL,  -- хешированный
+    password CHAR(60)     NOT NULL,
     contacts VARCHAR(1024)
 );
+
+CREATE UNIQUE INDEX email ON user(email);

@@ -1,7 +1,7 @@
 # Личный проект «Дела в Порядке» 
 
 * Студент: [Роман Кунин](https://up.htmlacademy.ru/php/2/user/497465).
-* Наставник: [Антон Попов](https://htmlacademy.ru/profile/joker).
+* Наставник: [Максим Васильев](https://htmlacademy.ru/profile/id416573).
 
 ---
 
