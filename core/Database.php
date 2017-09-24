@@ -9,6 +9,11 @@ class Database
 {
     protected static $pdo;
 
+    /**
+     * Connect to the MySQL database.
+     *
+     * @return void
+     */
     public static function connect()
     {
         $config = App::$config['database'];
@@ -24,6 +29,13 @@ class Database
         }
     }
 
+    /**
+     * Check if a user with a given email exists in the database.
+     *
+     * @param string
+     *
+     * @return boolean
+     */
     public static function userWithEmailExists($email)
     {
         $stm = static::$pdo->prepare("SELECT 1 FROM user WHERE email=?");
@@ -33,6 +45,14 @@ class Database
         return (bool) $stm->fetchColumn();
     }
 
+    /**
+     * Check if a user with a given email and password exists in the database.
+     *
+     * @param string
+     * @param string
+     *
+     * @return boolean
+     */
     public static function userExists($email, $password)
     {
         if (! static::userWithEmailExists($email)) {
@@ -42,6 +62,13 @@ class Database
         return password_verify($password, $passwordDb);
     }
 
+    /**
+     * Get the password (hashed) of the user with a given email.
+     *
+     * @param string
+     *
+     * @return string
+     */
     public static function getPasswordByEmail($email)
     {
         $statement = static::$pdo->prepare("SELECT password FROM user WHERE email=?");
@@ -50,6 +77,17 @@ class Database
         return $statement->fetchColumn();
     }
 
+    /**
+     * Add a new user to the database.
+     *
+     * The data must be valid and email must be new.
+     *
+     * @param string
+     * @param string
+     * @param string
+     *
+     * @return void
+     */
     public static function addUser($email, $password, $name)
     {
         $password = password_hash($password, PASSWORD_DEFAULT);
@@ -65,6 +103,13 @@ class Database
         static::addProject($userId, 'Входящие');
     }
 
+    /**
+     * Get the ID of the user with a given email.
+     *
+     * @param string
+     *
+     * @return integer
+     */
     public static function getUserIdByEmail($email)
     {
         $statement = static::$pdo->prepare("SELECT id FROM user WHERE email=?");
@@ -73,6 +118,13 @@ class Database
         return $statement->fetchColumn();
     }
 
+    /**
+     * Get the name of the user with a given ID.
+     *
+     * @param int
+     *
+     * @return string
+     */
     public static function getUserNameById($user)
     {
         $statement = static::$pdo->prepare("SELECT name FROM user WHERE id=?");
@@ -81,6 +133,13 @@ class Database
         return $statement->fetchColumn();
     }
 
+    /**
+     * Get the email of the user with a given ID.
+     *
+     * @param integer
+     *
+     * @return string
+     */
     public static function getUserEmailById($user)
     {
         $statement = static::$pdo->prepare("SELECT email FROM user WHERE id=?");
@@ -89,6 +148,13 @@ class Database
         return $statement->fetchColumn();
     }
 
+    /**
+     * Get the list of projects for the user with a given ID.
+     *
+     * @param integer
+     *
+     * @return string[]
+     */
     public static function getProjectsByUserId($user)
     {
         $statement = static::$pdo->prepare("SELECT id, user, name, count FROM project WHERE user=?");
@@ -99,6 +165,14 @@ class Database
         return $result;
     }
 
+    /**
+     * Add a new project for the user with a given ID.
+     *
+     * @param integer
+     * @param string
+     *
+     * @return integer
+     */
     public static function addProject($user, $name)
     {
         $statement = static::$pdo->prepare('INSERT INTO project SET user=?, name=?');
@@ -107,6 +181,14 @@ class Database
         $statement->execute();
     }
 
+    /**
+     * Check if the user with a given ID has a project with a given name.
+     *
+     * @param integer
+     * @param string
+     *
+     * @return boolean
+     */
     public static function projectExists($user, $name)
     {
         $statement = static::$pdo->prepare("SELECT * FROM project WHERE user=? AND name=?");
@@ -118,6 +200,14 @@ class Database
         return (bool) $row;
     }
 
+    /**
+     * Check if the user with a given ID has a task with a given ID.
+     *
+     * @param integer
+     * @param integer
+     *
+     * @return boolean
+     */
     public static function userHasTaskWithId($userId, $taskId)
     {
         $stm = static::$pdo->prepare("SELECT 1 FROM task WHERE id=? AND user=?");
@@ -128,6 +218,14 @@ class Database
         return (bool) $stm->fetchColumn();
     }
 
+    /**
+     * Check if a user with a given ID has a project with a given ID.
+     *
+     * @param integer
+     * @param integer
+     *
+     * @return boolean
+     */
     public static function projectExistsById($user, $id)
     {
         $statement = static::$pdo->prepare("SELECT * FROM project WHERE user=? AND id=?");
@@ -139,6 +237,14 @@ class Database
         return (bool) $row;
     }
 
+    /**
+     * Increment the task counter for a project.
+     *
+     * @param integer
+     * @param integer
+     *
+     * @return void
+     */
     public static function incrementProjectCounter($user, $id)
     {
         $statement = static::$pdo->prepare("UPDATE project SET count=count+1 WHERE user=? AND id=?");
@@ -147,6 +253,14 @@ class Database
         $statement->execute();
     }
 
+    /**
+     * Get the tasks for a user's project.
+     *
+     * @param integer
+     * @param integer
+     *
+     * @return array[]
+     */
     public static function getTasksForProjectByUserId($user, $project)
     {
         if ($project === 0) {
@@ -164,6 +278,15 @@ class Database
         return $statement->fetchAll();
     }
 
+    /**
+     * Get tasks that names contain specified words.
+     *
+     * @param integer
+     * @param string
+     * @param string
+     *
+     * @return array[]
+     */
     public static function getTasksBySearch($userId, $text, $filter)
     {
         $query = 'SELECT * FROM task WHERE user=? AND name LIKE ?';
@@ -184,6 +307,14 @@ class Database
         return $stm->fetchAll();
     }
 
+    /**
+     * Get the tasks for the specified user/project that have their deadline today.
+     *
+     * @param integer
+     * @param integer
+     *
+     * @return array[]
+     */
     public static function getTodayTasks($userId, $projectId)
     {
         $query = "SELECT * FROM task WHERE user=? AND project=? AND DATE(`deadline`)=CURDATE()";
@@ -195,6 +326,14 @@ class Database
         return $stm->fetchAll();
     }
 
+    /**
+     * Get the tasks for the specified user/project that have their deadline tomorrow.
+     *
+     * @param integer
+     * @param integer
+     *
+     * @return array[]
+     */
     public static function getTomorrowTasks($userId, $projectId)
     {
         $query = "SELECT * FROM task WHERE user=? AND project=? AND DATE(`deadline`)=CURDATE()+INTERVAL 1 DAY";
@@ -206,6 +345,14 @@ class Database
         return $stm->fetchAll();
     }
 
+    /**
+     * Get the tasks for the specified user/project that have passed their deadline.
+     *
+     * @param integer
+     * @param integer
+     *
+     * @return array[]
+     */
     public static function getOverdueTasks($userId, $projectId)
     {
         $query = "SELECT * FROM task WHERE user=? AND project=? AND DATE(`deadline`)<CURDATE()";
@@ -217,6 +364,11 @@ class Database
         return $stm->fetchAll();
     }
 
+    /**
+     * Get the "hot" tasks that will have passed their deadline in an hour.
+     *
+     * @return array[]
+     */
     public static function getDueTasks()
     {
         $query = "SELECT * FROM task WHERE deadline > NOW() AND deadline < NOW() + INTERVAL 1 HOUR";
@@ -225,6 +377,13 @@ class Database
         return $stm->fetchAll();
     }
 
+    /**
+     * Get the number of tasks for a user.
+     *
+     * @param integer
+     *
+     * @return integer
+     */
     public static function allTasksCountForUser($user)
     {
         $statement = static::$pdo->prepare("SELECT 1 FROM task WHERE user=?");
@@ -233,6 +392,13 @@ class Database
         return $statement->rowCount();
     }
 
+    /**
+     * Add a new task to the database.
+     *
+     * @param array $value  Contains all data needed to add a new task.
+     *
+     * @return void
+     */
     public static function addTask($value)
     {
         $value['date'] = strtodatetime($value['date']);
@@ -252,6 +418,13 @@ class Database
         static::incrementProjectCounter($value['user'], $value['project']);
     }
 
+    /**
+     * If the task is completed, make it not completed and vice versa.
+     *
+     * @param integer
+     *
+     * @return void
+     */
     public static function switchTaskDone($taskId)
     {
         // TODO: дата завершения не устанавливается
