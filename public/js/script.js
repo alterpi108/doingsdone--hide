@@ -1,5 +1,9 @@
 'use strict';
 
+//////////////////////////////////
+// Dealing with cookies
+//////////////////////////////////
+
 // Create cookie
 function createCookie(name, value, days) {
     var expires;
@@ -35,6 +39,16 @@ function eraseCookie(name) {
     createCookie(name,"",-1);
 }
 
+
+//////////////////////////////////
+// Page behaviour
+//////////////////////////////////
+
+function urlNoParam()
+{
+    return location.protocol + '//' + location.host + location.pathname;
+}
+
 function showCompleted() {
   if (readCookie('show')) {
     eraseCookie('show');
@@ -44,12 +58,6 @@ function showCompleted() {
   location.reload();
 }
 
-
-function urlNoParam()
-{
-    return location.protocol + '//' + location.host + location.pathname;
-}
-
 function replaceQueryParam(param, newval, search) {
     var regex = new RegExp("([?;&])" + param + "[^&;]*[;&]?");
     var query = search.replace(regex, "$1").replace(/&$/, '');
@@ -57,65 +65,32 @@ function replaceQueryParam(param, newval, search) {
     return (query.length > 2 ? query + "&" : "?") + (newval ? param + "=" + newval : '');
 }
 
-/* Все функции ниже похожи как две капли воды */
-
-document.querySelector(".tasks-switch__item:nth-child(1)")
-    .addEventListener("click", function (e) {
+function handlerFactory($query) {
+    return function (e) {
         e.preventDefault();
 
         var url = window.location.href;
-        if(url.search('filter=') != -1) {
-            window.location.replace(urlNoParam() + replaceQueryParam('filter', 'all', window.location.search));
+        if (url.search('filter=') != -1) {
+            window.location.replace(urlNoParam() + replaceQueryParam('filter', $query, window.location.search));
         } else if (url.search('\\?') != -1) {
             window.location.replace(url + '&filter=all');
         } else {
             window.location.replace(url + '?filter=all');
         }
-    });
+    }
+}
+
+document.querySelector(".tasks-switch__item:nth-child(1)")
+    .addEventListener(handlerFactory('all'));
 
 document.querySelector(".tasks-switch__item:nth-child(2)")
-    .addEventListener("click", function (e) {
-        e.preventDefault();
-
-        var url = window.location.href;
-        if(url.search('filter=') != -1) {
-            window.location.replace(urlNoParam() + replaceQueryParam('filter', 'today', window.location.search));
-        } else if (url.search('\\?') != -1) {
-            window.location.replace(url + '&filter=today');
-        } else {
-            window.location.replace(url + '?filter=today');
-        }
-    });
-
+    .addEventListener(handlerFactory('today'));
 
 document.querySelector(".tasks-switch__item:nth-child(3)")
-    .addEventListener("click", function (e) {
-        e.preventDefault();
-
-        var url = window.location.href;
-        if(url.search('filter=') != -1) {
-            window.location.replace(urlNoParam() + replaceQueryParam('filter', 'tomorrow', window.location.search));
-        } else if (url.search('\\?') != -1) {
-            window.location.replace(url + '&filter=tomorrow');
-        } else {
-            window.location.replace(url + '?filter=tomorrow');
-        }
-    });
+    .addEventListener(handlerFactory('tomorrow'));
 
 document.querySelector(".tasks-switch__item:nth-child(4)")
-    .addEventListener("click", function (e) {
-        e.preventDefault();
-
-        var url = window.location.href;
-        if(url.search('filter=') != -1) {
-            window.location.replace(urlNoParam() + replaceQueryParam('filter', 'overdue', window.location.search));
-        } else if (url.search('\\?') != -1) {
-            window.location.replace(url + '&filter=overdue');
-        } else {
-            window.location.replace(url + '?filter=overdue');
-        }
-    });
-
+    .addEventListener(handlerFactory('due'));
 
 function completeTask($id)
 {
@@ -126,33 +101,3 @@ function completeTask($id)
     xhttp.open("GET", '/complete?id=' + $id, true);
     xhttp.send();
 }
-
-
-
-
-
-
-/* Код, который был изначально */
-// var expandControls = document.querySelectorAll('.expand-control');
-//
-// var hidePopups = function() {
-//   [].forEach.call(document.querySelectorAll('.expand-list'), function(item) {
-//     item.classList.add('hidden');
-//   });
-// };
-//
-// document.body.addEventListener('click', hidePopups, true);
-//
-// [].forEach.call(expandControls, function(item) {
-//   item.addEventListener('click', function() {
-//     item.nextElementSibling.classList.toggle('hidden');
-//   });
-// });
-//
-// var $checkbox = document.getElementsByClassName('checkbox__input')[0];
-//
-// $checkbox.addEventListener('change', function(event) {
-//   var is_checked = +event.target.checked;
-//
-//   window.location = '/guest.view.php?show_completed=' + is_checked;
-// });
