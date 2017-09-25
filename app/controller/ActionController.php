@@ -60,7 +60,7 @@ class ActionController {
         App::loggedOnly();
 
         $value = [
-            'name' => Request::name()
+            'name' => Request::projectName()
         ];
 
         $valid = [

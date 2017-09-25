@@ -14,10 +14,11 @@ class App
 
     public static function auth()
     {
-        static::$userId = Request::user();
+        $userId = Request::user();
 
-        if (static::$userId !== null) {
-            static::$userName = Database::getUserNameById(static::$userId);
+        if ($userId !== null && Database::userWithIdExists($userId)) {
+            static::$userId = $userId;
+            static::$userName = Database::getUserNameById($userId);
         }
     }
 
@@ -63,7 +64,7 @@ class App
 
     public static function redirect($location)
     {
-        header("Location: $location/");
+        header("Location: $location");
     }
 
     public static function redirectIndex()

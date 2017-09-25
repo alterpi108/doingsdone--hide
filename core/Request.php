@@ -28,6 +28,13 @@ class Request
         return $_POST['name'];
     }
 
+    public static function projectName()
+    {
+        // (mb_strtolower() doesn't work on all machines)
+        // return mb_strtolower($_POST['name']);
+        return $_POST['name'];
+    }
+
     public static function date()
     {
         return $_POST['date'];

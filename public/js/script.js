@@ -117,13 +117,16 @@ document.querySelector(".tasks-switch__item:nth-child(4)")
     });
 
 
-
-
 function completeTask($id)
 {
-    var currentHref = window.location.href;
-    window.location.href = '/complete?id=' + $id;
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        location.reload();
+    };
+    xhttp.open("GET", '/complete?id=' + $id, true);
+    xhttp.send();
 }
+
 
 
 

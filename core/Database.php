@@ -175,6 +175,7 @@ class Database
      */
     public static function addProject($user, $name)
     {
+        $name = strtolower($name);
         $statement = static::$pdo->prepare('INSERT INTO project SET user=?, name=?');
         $statement->bindParam(1, $user, PDO::PARAM_INT);
         $statement->bindParam(2, $name, PDO::PARAM_STR);
@@ -198,6 +199,22 @@ class Database
 
         $row = $statement->fetch(PDO::FETCH_ASSOC);
         return (bool) $row;
+    }
+
+    /**
+     * Check if the user with a given ID has a project with a given name.
+     *
+     * @param integer
+     * @param string
+     *
+     * @return boolean
+     */
+    public static function userWithIdExists($userId)
+    {
+        $stm = static::$pdo->prepare("SELECT * FROM user WHERE id=?");
+        $stm->bindParam(1, $userId, PDO::PARAM_INT);
+        $stm->execute();
+        return (bool) $stm->fetch(PDO::FETCH_ASSOC);
     }
 
     /**
