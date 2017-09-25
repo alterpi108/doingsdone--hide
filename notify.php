@@ -4,20 +4,14 @@ require 'vendor/autoload.php';
 
 use App\Core\Database\Database;
 
-
-$host = 'smtp.mail.ru';
-$port = 465;
-$user = 'doingsdone@mail.ru';
-$password = 'rds7BgcL';
-$encryption = 'ssl';
-
-$transport = (new Swift_SmtpTransport($host, $port))
-    ->setUsername($user)
-    ->setPassword($password)
-    ->setEncryption($encryption);
-
-$mailer = new Swift_Mailer($transport);
-
+/**
+ * From a list of tasks select only the tasks of a given user.
+ *
+ * @param array[]
+ * @param integer
+ *
+ * @return array[]
+ */
 function userTasks($tasks, $userId)
 {
     $filtered = [];
@@ -29,9 +23,45 @@ function userTasks($tasks, $userId)
     return $filtered;
 }
 
-$header = 'Уведомление от сервиса «Дела в порядке»';
+/**
+ * Send an email.
+ *
+ * @param string
+ * @param string
+ * @param string
+ * @param string
+ * @param Swift_Mailer
+ *
+ * @return void
+ */
+function sendMessage($subject, $from, $to, $body, $mailer)
+{
+    $message = (new Swift_Message($subject))
+        ->setFrom($from)
+        ->setTo($to)
+        ->setBody($body);
+
+    $mailer->send($message);
+}
+
+// constant information
+$host = 'smtp.mail.ru';
+$port = 465;
+$user = 'doingsdone@mail.ru';
+$password = 'rds7BgcL';
+$encryption = 'ssl';
+$subject = 'Уведомление от сервиса «Дела в порядке»';
 $from = ['doingsdone@mail.ru' => 'Doings Done'];
 
+// set up the mailer
+$transport = (new Swift_SmtpTransport($host, $port))
+    ->setUsername($user)
+    ->setPassword($password)
+    ->setEncryption($encryption);
+
+$mailer = new Swift_Mailer($transport);
+
+// select due tasks and handle for each user
 $tasks = Database::getDueTasks();
 $userIds = array_unique(array_column($tasks, 'user'));
 
@@ -47,11 +77,5 @@ foreach ($userIds as $userId) {
         $body .= "У вас запланирована задача '" . $task['name'] . "' на " . $task['deadline'] . ".\n";
     }
 
-    // send email
-    $message = (new Swift_Message('header'))
-        ->setFrom($from)
-        ->setTo($to)
-        ->setBody($body);
-
-    $mailer->send($message);
+    sendMessage($subject, $from, $to, $body, $mailer);
 }
