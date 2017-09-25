@@ -202,10 +202,9 @@ class Database
     }
 
     /**
-     * Check if the user with a given ID has a project with a given name.
+     * Check if there is a user with a given ID in the database.
      *
      * @param integer
-     * @param string
      *
      * @return boolean
      */
@@ -436,6 +435,21 @@ class Database
     }
 
     /**
+     * Check if a task completed.
+     *
+     * @param integer
+     *
+     * @return boolean
+     */
+    public function isTaskDone($taskId)
+    {
+        $statement = static::$pdo->prepare("SELECT 1 FROM task WHERE id=? AND done=TRUE");
+        $statement->bindParam(1, $taskId, PDO::PARAM_INT);
+        $statement->execute();
+        return (bool) $statement->fetch(PDO::FETCH_ASSOC);
+    }
+
+    /**
      * If the task is completed, make it not completed and vice versa.
      *
      * @param integer
@@ -444,9 +458,12 @@ class Database
      */
     public static function switchTaskDone($taskId)
     {
-        // TODO: дата завершения не устанавливается
-        $statement = static::$pdo->prepare("UPDATE task SET done=IF(done, 0, 1) WHERE id=?");
-        $statement->bindParam(1, $taskId, PDO::PARAM_INT);
-        $statement->execute();
+        if (! Database::isTaskDone($taskId)) {
+            $stm = static::$pdo->prepare("UPDATE task SET done=1, finished=NOW() WHERE id=?");
+        } else {
+            $stm = static::$pdo->prepare("UPDATE task SET done=0, finished=NULL WHERE id=?");
+        }
+        $stm->bindParam(1, $taskId, PDO::PARAM_INT);
+        $stm->execute();
     }
 }
