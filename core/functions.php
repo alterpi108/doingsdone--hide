@@ -42,7 +42,8 @@ function validateProjectName($value)
 function validateDate($str)
 {
     $timestamp = strtotimestamp($str);
-    return $timestamp !== 0;
+    $currentTime = strtotimestamp('now');
+    return (bool) $timestamp && $timestamp >= $currentTime;
 }
 
 function datetimeToDate($dt)
