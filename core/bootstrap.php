@@ -2,7 +2,6 @@
 require 'core/App.php';
 require 'core/Request.php';
 require 'core/Router.php';
-require 'core/Task.php';
 require 'core/Database.php';
 require 'app/controller/ActionController.php';
 require 'app/controller/PagesController.php';

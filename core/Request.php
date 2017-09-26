@@ -3,31 +3,61 @@ namespace App\Core;
 
 class Request
 {
+    /**
+     * Get the current URI.
+     *
+     * @return string
+     */
     public static function uri()
     {
         return trim($_SERVER['PATH_INFO'], '/');
     }
 
+    /**
+     * Get the current method (post or get).
+     *
+     * @return string
+     */
     public static function method()
     {
         return $_SERVER['REQUEST_METHOD'];
     }
 
+    /**
+     * Get the submitted email.
+     *
+     * @return string
+     */
     public static function email()
     {
         return trim($_POST['email']);
     }
 
+    /**
+     * Get the submitted password.
+     *
+     * @return string
+     */
     public static function password()
     {
         return $_POST['password'];
     }
 
+    /**
+     * Get the submitted name.
+     *
+     * @return string
+     */
     public static function name()
     {
         return trim($_POST['name']);
     }
 
+    /**
+     * Get the submitted project name.
+     *
+     * @return string
+     */
     public static function projectName()
     {
         $projectName = trim($_POST['name']);
@@ -37,33 +67,33 @@ class Request
         return $projectName;
     }
 
-    public static function date()
-    {
-        return $_POST['date'];
-    }
-
-    public static function file()
-    {
-        return $_POST['file'];
-    }
-
+    /**
+     * Get the submitted project ID.
+     *
+     * @return integer
+     */
     public static function project()
     {
-        return $_POST['project'];
+        return (int) $_POST['project'];
     }
 
     /**
-     * Возвращает ID пользователя, для которого запущена текущая сессия.
+     * Get the submitted date.
+     *
+     * @return string
+     */
+    public static function date()
+    {
+        return trim($_POST['date']);
+    }
+
+    /**
+     * Get the user ID that owns the current session.
      *
      * @return integer
      */
     public static function user()
     {
         return $_SESSION['user'] ?? null;
-    }
-
-    public static function logged()
-    {
-        return static::user() !== null;
     }
 }
