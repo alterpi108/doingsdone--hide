@@ -8,16 +8,20 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body<?php if ($overlay) print(' class="overlay"'); ?>>
+<?php if ($overlay): ?>
+<body class="overlay">
+<?php else: ?>
+<body>
+<?php endif; ?>
 
 <h1 class="visually-hidden">Дела в порядке</h1>
 
 <div class="page-wrapper">
     <div class="container container--with-sidebar">
         <header class="main-header">
-            <a href="#">
-                <img src="img/logo.png" width="153" height="42" alt="Логитип Дела в порядке">
-            </a>
+<!--            <a href="#">-->
+<!--                <img src="img/logo.png" width="153" height="42" alt="Логитип Дела в порядке">-->
+<!--            </a>-->
 
             <div class="main-header__side">
                 <a class="main-header__side-item button button--plus" href="index.php?add">Добавить задачу</a>
@@ -105,5 +109,5 @@
 <?= $modal ?>
 
 <script type="text/javascript" src="js/script.js"></script>
-</body>
+</>
 </html>
