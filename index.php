@@ -16,7 +16,8 @@ use App\Core\Request;
 // Можете запустить штатный веб-сервер, если из директории с проектом выполните команду `php -S localhost:8000`
 //===========================================
 
-date_default_timezone_set('Europe/Moscow');
+// PHP and MySQL should be set to the same time zone
+//date_default_timezone_set('Europe/Moscow');
 
 session_start();
 
