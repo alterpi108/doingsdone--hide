@@ -25,7 +25,7 @@ class Database
                 $config['options']
             );
         } catch (PDOException $e) {
-            die($e->getMessage());
+            App::error('Не могу подключиться к базе данных');
         }
     }
 
@@ -41,7 +41,6 @@ class Database
         $stm = static::$pdo->prepare("SELECT 1 FROM user WHERE email=?");
         $stm->bindParam(1, $email, PDO::PARAM_STR);
         $stm->execute();
-
         return (bool) $stm->fetchColumn();
     }
 
@@ -173,11 +172,10 @@ class Database
      * @param integer
      * @param string
      *
-     * @return integer
+     * @return void
      */
     public static function addProject($user, $name)
     {
-        $name = strtolower($name);
         $statement = static::$pdo->prepare('INSERT INTO project SET user=?, name=?');
         $statement->bindParam(1, $user, PDO::PARAM_INT);
         $statement->bindParam(2, $name, PDO::PARAM_STR);
