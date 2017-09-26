@@ -420,7 +420,7 @@ class Database
         if ($value['date'] !== '') {
             $value['date'] = strtodatetime($value['date']);
         }
-        
+
         $statement = static::$pdo->prepare('INSERT INTO task SET user=?, name=?, project=?, deadline=?, file=?');
         $statement->bindParam(1, $value['user'], PDO::PARAM_INT);
         $statement->bindParam(2, $value['name'], PDO::PARAM_STR);

@@ -132,11 +132,17 @@ function failed($valid)
  */
 function strtotimestamp($str)
 {
+    $str = trim($str);
+
     $what = ['послезавтра', 'сегодня', 'завтра', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота', 'воскресенье', 'в'];
     $to = ['tomorrow + 1 day', 'now', 'tomorrow', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', ''];
     $processed = str_replace($what , $to , $str);
-    $timestamp = strtotime($processed);
-    return $timestamp;
+
+    if ($processed === 'now') {
+        $processed = 'now 23:59';
+    }
+
+    return strtotime($processed);
 }
 
 /**
