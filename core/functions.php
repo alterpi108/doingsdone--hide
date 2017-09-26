@@ -53,7 +53,7 @@ function validateEmail($value)
  */
 function validatePassword($value)
 {
-    return $value !== '';
+    return trim($value) !== '';
 }
 
 /**
@@ -65,7 +65,7 @@ function validatePassword($value)
  */
 function validateName($value)
 {
-    return $value !== '';
+    return trim($value) !== '';
 }
 
 /**
@@ -77,7 +77,7 @@ function validateName($value)
  */
 function validateProjectName($value)
 {
-    return $value !== '';
+    return trim($value) !== '';
 }
 
 /**
