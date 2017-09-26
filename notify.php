@@ -5,7 +5,7 @@ require 'vendor/autoload.php';
 use App\Core\Database\Database;
 
 /**
- * From a list of tasks select only the tasks of a given user.
+ * From a list of tasks select those tasks that belong to a given user.
  *
  * @param array[]
  * @param integer

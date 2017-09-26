@@ -5,7 +5,6 @@ VALUES
     ('Леночка', 'kitty_93@li.ru', '$2y$10$bWtSjUhwgggtxrnJ7rxmIe63ABubHQs0AS0hgnOo41IEdMHkYoSVa'),
     ('Руслан', 'warrior07@mail.ru', '$2y$10$2OxpEH7narYpkOT1H5cApezuzh10tZEEQ2axgFOaKW.55LxIJBgWW');
 
--- Проект "Входищие" появляется у нового пользователя по умолчанию
 INSERT INTO
     project (user, name)
 VALUES
