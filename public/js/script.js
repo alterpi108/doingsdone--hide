@@ -70,27 +70,28 @@ function handlerFactory($query) {
         e.preventDefault();
 
         var url = window.location.href;
+
         if (url.search('filter=') != -1) {
             window.location.replace(urlNoParam() + replaceQueryParam('filter', $query, window.location.search));
         } else if (url.search('\\?') != -1) {
-            window.location.replace(url + '&filter=all');
+            window.location.replace(url + '&filter=' + $query);
         } else {
-            window.location.replace(url + '?filter=all');
+            window.location.replace(urlNoParam() + '?filter=' + $query);
         }
     }
 }
 
 document.querySelector(".tasks-switch__item:nth-child(1)")
-    .addEventListener(handlerFactory('all'));
+    .addEventListener('click', handlerFactory('all'));
 
 document.querySelector(".tasks-switch__item:nth-child(2)")
-    .addEventListener(handlerFactory('today'));
+    .addEventListener('click', handlerFactory('today'));
 
 document.querySelector(".tasks-switch__item:nth-child(3)")
-    .addEventListener(handlerFactory('tomorrow'));
+    .addEventListener('click', handlerFactory('tomorrow'));
 
 document.querySelector(".tasks-switch__item:nth-child(4)")
-    .addEventListener(handlerFactory('due'));
+    .addEventListener('click', handlerFactory('overdue'));
 
 function completeTask($id)
 {
