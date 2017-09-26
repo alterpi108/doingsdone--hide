@@ -1,6 +1,15 @@
 {
-    "name": "doingsdone",
-    "description": "Личный проект «Дела в Порядке» от HTML Academy",
+    "name": "htmlacademy/doingsdone",
+    "description": "a full-fledged todo-list",
     "type": "project",
-    "require": {}
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Roman Kunin",
+            "email": "mosceo@gmail.com"
+        }
+    ],
+    "require": {
+        "swiftmailer/swiftmailer": "@stable"
+    }
 }

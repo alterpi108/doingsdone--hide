@@ -1,44 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <link rel="stylesheet" href="../css/normalize.css">
-    <link rel="stylesheet" href="../css/style.css">
-</head>
-
-<body class="body-background <?php if ($modal) print('overlay'); ?>">
-<h1 class="visually-hidden">Дела в порядке</h1>
-
-<div class="page-wrapper">
-    <div class="container">
-        <header class="main-header">
-            <a href="#">a
-                <img src="../img/logo.png" width="153" height="42" alt="Логитип Дела в порядке">
-            </a>
-
-            <div class="main-header__side">
-                <a class="main-header__side-item button button--transparent" href="index.php?login">Войти</a>
-            </div>
-        </header>
-
-        <div class="content">
-            <section class="welcome">
-                <h2 class="welcome__heading">«Дела в порядке»</h2>
-
-                <div class="welcome__text">
-                    <p>«Дела в порядке» — это веб приложение для удобного ведения списка дел. Сервис помогает пользователям не забывать о предстоящих важных событиях и задачах.</p>
-
-                    <p>После создания аккаунта, пользователь может начать вносить свои дела, деля их по проектам и указывая сроки.</p>
-                </div>
-
-                <a class="welcome__button button" href="#">Зарегистрироваться</a>
-            </section>
-        </div>
-    </div>
-</div>
-
 <footer class="main-footer">
     <div class="container">
         <div class="main-footer__copyright">
@@ -47,7 +6,7 @@
             <p>Веб-приложение для удобного ведения списка дел.</p>
         </div>
 
-        <a class="main-footer__button button button--plus">Добавить задачу</a>
+        <a class="main-footer__button button button--plus" href="/add-task">Добавить задачу</a>
 
         <div class="main-footer__social social">
             <span class="visually-hidden">Мы в соцсетях:</span>
@@ -72,51 +31,14 @@
             <span class="visually-hidden">Разработано:</span>
 
             <a href="https://htmlacademy.ru/intensive/php">
-                <img src="../img/htmlacademy.svg" alt="HTML Academy" width="118" height="40">
+                <img src="/public/img/htmlacademy.svg" alt="HTML Academy" width="118" height="40">
             </a>
         </div>
     </div>
 </footer>
 
-<div class="modal" <?php if (! $modal) print('hidden'); ?>>
-    <button class="modal__close" type="button" name="button">Закрыть</button>
-
-    <h2 class="modal__heading">Вход на сайт</h2>
-
-    <form class="form" action="index.php?login" method="POST">
-        <div class="form__row">
-            <label class="form__label" for="email">E-mail <sup>*</sup></label>
-
-            <input class="form__input <?php if ($email_error) print('form__input--error'); ?>"
-                   type="text" name="email" id="email" value="<?= $email ?>" placeholder="Введите e-mail">
-
-            <?php if ($email_error): ?>
-                <p class="form__message">E-mail введён некорректно</p>
-            <?php endif; ?>
-        </div>
-
-        <div class="form__row">
-            <label class="form__label" for="password">Пароль <sup>*</sup></label>
-
-            <input class="form__input <?php if ($password_error) print('form__input--error'); ?>"
-                   type="password" name="password" id="password" value="" placeholder="Введите пароль">
-
-            <?php if ($password_error): ?>
-                <p class="form__message">Вы ввели неверный пароль</p>
-            <?php endif; ?>
-        </div>
-
-        <div class="form__row">
-            <label class="checkbox">
-                <input class="checkbox__input visually-hidden" type="checkbox" checked>
-                <span class="checkbox__text">Запомнить меня</span>
-            </label>
-        </div>
-
-        <div class="form__row form__row--controls">
-            <input class="button" type="submit" name="" value="Войти">
-        </div>
-    </form>
-</div>
+<?php if ($loadScript): ?>
+    <script type="text/javascript" src="/public/js/script.js"></script>
+<?php endif; ?>
 </body>
 </html>

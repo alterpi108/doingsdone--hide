@@ -1,25 +1,11 @@
-/* PhpStorm */
--- noinspection SqlDialectInspectionForFile
--- noinspection SqlNoDataSourceInspectionForFile
-
-
-/**************
- *  DATABASE  *
- **************/
-
 CREATE DATABASE doingsdone
   DEFAULT CHARACTER SET utf8;
 
 USE doingsdone;
 
-
-/************
- *  TABLES  *
- ************/
-
 CREATE TABLE project (
     id    INT AUTO_INCREMENT PRIMARY KEY,
-    user  INT         NOT NULL,  -- пользователь, создавший проект
+    user  INT         NOT NULL,
     name  VARCHAR(60) NOT NULL,
     count INT         NOT NULL  DEFAULT 0
 );
