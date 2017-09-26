@@ -71,4 +71,14 @@ class App
     {
         header('Location: /');
     }
+
+    public static function saveFile()
+    {
+        $fileName = $_FILES['file']['name'];
+        $src = $_FILES['file']['tmp_name'];
+        $dst = __DIR__ . '/../../public/userfiles/' . $fileName;
+        move_uploaded_file($src, $dst);
+
+        return $fileName;
+    }
 }

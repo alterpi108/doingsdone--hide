@@ -1,16 +1,3 @@
-<?php
-//
-//
-//var_dump($value);
-//
-//
-//?>
-
-
-
-
-
-
 <div class="modal">
     <button class="modal__close" type="button" name="button" onclick="location.href = '/'">Закрыть</button>
 

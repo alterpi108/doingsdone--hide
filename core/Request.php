@@ -15,7 +15,7 @@ class Request
 
     public static function email()
     {
-        return $_POST['email'];
+        return trim($_POST['email']);
     }
 
     public static function password()
@@ -25,14 +25,16 @@ class Request
 
     public static function name()
     {
-        return $_POST['name'];
+        return trim($_POST['name']);
     }
 
     public static function projectName()
     {
-        // (mb_strtolower() doesn't work on all machines)
-        // return mb_strtolower($_POST['name']);
-        return $_POST['name'];
+        $projectName = trim($_POST['name']);
+        if (function_exists('mb_strtolower')) {
+            $projectName = mb_strtolower($projectName);
+        }
+        return $projectName;
     }
 
     public static function date()

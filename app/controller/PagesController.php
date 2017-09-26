@@ -2,48 +2,85 @@
 namespace App\Controllers;
 
 use App\Core\Database\Database;
-use App\Core\Request;
 use App\Core\App;
 use App\Models\Manager;
 
 class PagesController {
+
+    /**
+     * Open the index page.
+     *
+     * @return void
+     */
     public function guest()
     {
         if (! App::logged()) {
-            $this->_guest(false, false, false, [], []);
+            $this->generalGuest(false, false, false, [], []);
         } else {
             $this->index();
         }
     }
 
+    /**
+     * Open the login page.
+     *
+     * @return void
+     */
     public function login()
     {
-        $this->_guest(true, false, false, [], []);
+        $this->generalGuest(true, false, false, [], []);
     }
 
+    /**
+     * Open the login page just after signing up.
+     *
+     * @return void
+     */
     public function firstLogin()
     {
-        $this->_guest(true, true, false, [], []);
+        $this->generalGuest(true, true, false, [], []);
     }
 
+    /**
+     * Logout the user.
+     *
+     * @return void
+     */
     public function logout()
     {
         App::logout();
         App::redirectIndex();
     }
 
+    /**
+     * Open the signup page.
+     *
+     * @return void
+     */
     public function signup()
     {
-        $this->_signup([], []);
+        $this->generalSignup([], []);
     }
 
+    /**
+     * Open the page with tasks.
+     *
+     * @return void
+     */
     public function index()
     {
         App::loggedOnly();
 
-        $this->_index(null, false, false, [], []);
+        $this->generalIndex(null, false, false, [], []);
     }
 
+    /**
+     * Show the tasks for a specified project.
+     *
+     * @param integer
+     *
+     * @return void
+     */
     public function project($projectId)
     {
         App::loggedOnly();
@@ -51,27 +88,55 @@ class PagesController {
         if (! Database::projectExistsById(App::$userId, $projectId)) {
             App::error("Такой проект не существует");
         }
-        $this->_index($projectId, false, false, [], []);
+        $this->generalIndex($projectId, false, false, [], []);
     }
 
+    /**
+     * Open the adding project page.
+     *
+     * @return void
+     */
     public function addProject()
     {
         App::loggedOnly();
-        $this->_index(0, true, false, [], []);
+        $this->generalIndex(0, true, false, [], []);
     }
 
+    /**
+     * Open the adding task page.
+     *
+     * @return void
+     */
     public function addTask()
     {
         App::loggedOnly();
-        $this->_index(0, false, true, [], []);
+        $this->generalIndex(0, false, true, [], []);
     }
 
+    /**
+     * Open the page that shows an error message.
+     *
+     * @param string
+     *
+     * @return void
+     */
     public function error($message = '')
     {
         view('error', ['message' => $message]);
     }
 
-    public function _guest($loginModal, $firstLogin, $loginFailed, $value, $valid)
+    /**
+     * Open the page to add a project.
+     *
+     * @param boolean
+     * @param boolean
+     * @param boolean
+     * @param array
+     * @param array
+     *
+     * @return void
+     */
+    public function generalGuest($loginModal, $firstLogin, $loginFailed, $value, $valid)
     {
         view('guest', [
             'loginModal' => $loginModal,
@@ -82,7 +147,15 @@ class PagesController {
         ]);
     }
 
-    public function _signup($value, $valid)
+    /**
+     * Open the general signup page.
+     *
+     * @param array
+     * @param array
+     *
+     * @return void
+     */
+    public function generalSignup($value, $valid)
     {
         view('signup', [
             'value' => $value,
@@ -90,7 +163,20 @@ class PagesController {
         ]);
     }
 
-    public function _index($currentProject, $projectModal, $taskModal, $value, $valid)
+    /**
+     * Open the page with tasks.
+     *
+     * How the page will look depends on the parameters.
+     *
+     * @param boolean
+     * @param boolean
+     * @param boolean
+     * @param array
+     * @param array
+     *
+     * @return void
+     */
+    public function generalIndex($currentProject, $projectModal, $taskModal, $value, $valid)
     {
         $projects = Database::getProjectsByUserId(App::$userId);
         if (! $currentProject) {
@@ -129,8 +215,14 @@ class PagesController {
         ]);
     }
 
-    // много дублирования кода с предыдущим методом
-    public function _indexSearch($query)
+    /**
+     * Open the page with tasks.
+     *
+     * @param string
+     *
+     * @return void
+     */
+    public function generalIndexSearch($query)
     {
         $filter = $_GET['filter'] ?? 'all';
 

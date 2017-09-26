@@ -88,9 +88,11 @@ class Database
      *
      * @return void
      */
-    public static function addUser($email, $password, $name)
+    public static function addUser($value)
     {
-        $password = password_hash($password, PASSWORD_DEFAULT);
+        $email = $value['email'];
+        $password = password_hash($value['password'], PASSWORD_DEFAULT);
+        $name = $value['name'];
 
         $stm = static::$pdo->prepare('INSERT INTO user SET email=?, password=?, name=?');
         $stm->bindParam(1, $email, PDO::PARAM_STR);
@@ -98,7 +100,7 @@ class Database
         $stm->bindParam(3, $name, PDO::PARAM_STR);
         $stm->execute();
 
-        // Проект "Входящие" добавляется для нового пользователя автоматически
+        // Project "Входящие" is added for a new user automatically
         $userId = static::$pdo->lastInsertId();
         static::addProject($userId, 'Входящие');
     }

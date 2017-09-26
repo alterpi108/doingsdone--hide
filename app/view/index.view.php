@@ -77,8 +77,6 @@
                             $done = (bool) $task['done'];
                             $deadline = $task['deadline'] ? $task['deadline'] : '&mdash;';
                             $important = date('d-m-Y') === date('d-m-Y', (strtotime($deadline)));
-
-
                     ?>
 
                     <?php if ($done): ?>
@@ -117,11 +115,6 @@
                         </tr>
                     <?php } ?>
                 </table>
-
-
-
-
-
             </main>
         </div>
     </div>

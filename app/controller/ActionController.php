@@ -7,6 +7,12 @@ use App\Models\Manager;
 use App\Core\App;
 
 class ActionController {
+
+    /**
+     * Handle a request to signup a new user.
+     *
+     * @return void
+     */
     public function signup()
     {
         $value = [
@@ -26,13 +32,18 @@ class ActionController {
         }
 
         if (failed($valid)) {
-            (new PagesController())->_signup($value, $valid);
+            (new PagesController())->generalSignup($value, $valid);
         } else {
-            Database::addUser($value['email'], $value['password'], $value['name']);
+            Database::addUser($value);
             App::redirect('/first-login');
         }
     }
 
+    /**
+     * Handle a request to login a user.
+     *
+     * @return void
+     */
     public function login()
     {
         $value = [
@@ -46,15 +57,20 @@ class ActionController {
         ];
 
         if (failed($valid)) {
-            (new PagesController())->_guest(true, false, false, $value, $valid);
+            (new PagesController())->generalGuest(true, false, false, $value, $valid);
         } else if (! Database::userExists($value['email'], $value['password'])) {
-            (new PagesController())->_guest(true, false, true, $value, $valid);
+            (new PagesController())->generalGuest(true, false, true, $value, $valid);
         } else {
             App::loginByEmail($value['email']);
             App::redirectIndex();
         }
     }
 
+    /**
+     * Handle a request to add a project.
+     *
+     * @return void
+     */
     public function addProject()
     {
         App::loggedOnly();
@@ -71,10 +87,15 @@ class ActionController {
             Database::addProject(App::$userId, $value['name']);
             App::redirectIndex();
         } else {
-            (new PagesController())->_index(0, true, false, $value, $valid);
+            (new PagesController())->generalIndex(0, true, false, $value, $valid);
         }
     }
 
+    /**
+     * Handle a request to add a task.
+     *
+     * @return void
+     */
     public function addTask()
     {
         App::loggedOnly();
@@ -92,23 +113,22 @@ class ActionController {
         $possible = Manager::newTaskValidate($value, $valid);
 
         if ($possible) {
-            // сохранение файла
             if (array_key_exists('file', $_FILES)) {
-                $fileName = $_FILES['file']['name'];
-                $src = $_FILES['file']['tmp_name'];
-                $dst = __DIR__ . '/../../public/userfiles/' . $fileName;
-                move_uploaded_file($src, $dst);
-
+                $fileName = App::saveFile();
                 $value['file'] = $fileName;
             }
-
             Database::addTask($value);
             App::redirectIndex();
         } else {
-            (new PagesController())->_index(0, false, true, $value, $valid);
+            (new PagesController())->generalIndex(0, false, true, $value, $valid);
         }
     }
 
+    /**
+     * Handle a request to search tasks.
+     *
+     * @return void
+     */
     public function search()
     {
         App::loggedOnly();
@@ -117,10 +137,15 @@ class ActionController {
             App::error('Предоставьте текст для поиска');
         } else {
             $query = trim($_GET['q']);
-            (new PagesController())->_indexSearch($query);
+            (new PagesController())->generalIndexSearch($query);
         }
     }
 
+    /**
+     * Handle a request to complete/uncomplete a task.
+     *
+     * @return void
+     */
     public function complete()
     {
         App::loggedOnly();
