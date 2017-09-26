@@ -30,8 +30,11 @@ class Manager
     {
         $validName = validateName($value['name']);
         $validProject = Database::projectExistsById($value['user'], $value['project']);
-        $validDate = validateDate($value['date']);
-
+        if ($value['date'] !== '') {
+            $validDate = validateDate($value['date']);
+        } else {
+            $validDate = true;
+        }
         $valid['name'] = $validName;
         $valid['project'] = $validProject;
         $valid['date'] = $validDate;
