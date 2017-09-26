@@ -166,6 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 
+
 $page_main = template_render('templates/index.php', [
     'projects' => $projects,
     'tasks' => $tasks,
