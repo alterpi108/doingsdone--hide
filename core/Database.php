@@ -279,17 +279,9 @@ class Database
      */
     public static function getTasksForProjectByUserId($user, $project)
     {
-        if ($project === 0) {
-            $query = "SELECT * FROM task WHERE user=?";
-            $statement = static::$pdo->prepare($query);
-            $statement->bindParam(1, $user, PDO::PARAM_INT);
-        } else {
-            $query = "SELECT * FROM task WHERE user=? AND project=?";
-            $statement = static::$pdo->prepare($query);
-            $statement->bindParam(1, $user, PDO::PARAM_INT);
-            $statement->bindParam(2, $project, PDO::PARAM_INT);
-        }
-
+        $statement = static::$pdo->prepare("SELECT * FROM task WHERE user=? AND project=?");
+        $statement->bindParam(1, $user, PDO::PARAM_INT);
+        $statement->bindParam(2, $project, PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetchAll();
     }
