@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/public/css/style.css">
 </head>
 
-<?php if ($overlay): ?>
+<?php if (isset($overlay) && $overlay): ?>
     <body class="overlay">
 <?php else: ?>
     <body>

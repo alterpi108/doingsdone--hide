@@ -17,10 +17,10 @@
             <label class="form__label" for="email">E-mail <sup>*</sup></label>
 
             <?php if (array_key_exists('email', $valid) && ! $valid['email']): ?>
-                <input class="form__input  form__input--error" type="text" name="email" id="email" value="<?= htmlspecialchars($value['email']) ?>" placeholder="Введите e-mail">
+                <input class="form__input  form__input--error" type="text" name="email" id="email" value="<?= htmlspecialchars($value['email'] ?? '') ?>" placeholder="Введите e-mail">
                 <p class="form__message">E-mail введён некорректно</p>
             <?php else: ?>
-                <input class="form__input" type="text" name="email" id="email" value="<?= htmlspecialchars($value['email']) ?>" placeholder="Введите e-mail">
+                <input class="form__input" type="text" name="email" id="email" value="<?= htmlspecialchars($value['email'] ?? '') ?>" placeholder="Введите e-mail">
             <?php endif; ?>
         </div>
 

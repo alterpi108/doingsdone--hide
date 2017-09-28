@@ -10,7 +10,7 @@ class Request
      */
     public static function uri()
     {
-        return trim($_SERVER['PATH_INFO'], '/');
+        return trim($_SERVER['PATH_INFO'] ?? '', '/');
     }
 
     /**
@@ -20,7 +20,7 @@ class Request
      */
     public static function method()
     {
-        return $_SERVER['REQUEST_METHOD'];
+        return trim($_SERVER['REQUEST_METHOD'] ?? '', '/');
     }
 
     /**
@@ -30,7 +30,7 @@ class Request
      */
     public static function email()
     {
-        return trim($_POST['email']);
+        return trim($_POST['email'] ?? '');
     }
 
     /**
@@ -40,7 +40,7 @@ class Request
      */
     public static function password()
     {
-        return $_POST['password'];
+        return $_POST['password'] ?? '';
     }
 
     /**
@@ -50,7 +50,7 @@ class Request
      */
     public static function name()
     {
-        return trim($_POST['name']);
+        return trim($_POST['name'] ?? '');
     }
 
     /**
@@ -60,7 +60,7 @@ class Request
      */
     public static function projectName()
     {
-        $projectName = trim($_POST['name']);
+        $projectName = trim($_POST['name'] ?? '');
         if (function_exists('mb_strtolower')) {
             $projectName = mb_strtolower($projectName);
         }
@@ -74,7 +74,7 @@ class Request
      */
     public static function project()
     {
-        return (int) $_POST['project'];
+        return (int) $_POST['project'] ?? 0;
     }
 
     /**
@@ -84,7 +84,7 @@ class Request
      */
     public static function date()
     {
-        return trim($_POST['date']);
+        return trim($_POST['date'] ?? '');
     }
 
     /**

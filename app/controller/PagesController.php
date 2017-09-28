@@ -195,7 +195,7 @@ class PagesController {
             $tasks = Database::getOverdueTasks(App::$userId, $currentProject);
         }
 
-        $showCompleted = (bool) $_COOKIE['show'];
+        $showCompleted = (bool) ($_COOKIE['show'] ?? false);
         if (! $showCompleted) {
             $tasks = Manager::filterNotCompleted($tasks);
         }
@@ -229,7 +229,7 @@ class PagesController {
         $projects = Database::getProjectsByUserId(App::$userId);
         $tasks = Database::getTasksBySearch(App::$userId, $query, $filter);
 
-        $showCompleted = (bool) $_COOKIE['show'];
+        $showCompleted = (bool) ($_COOKIE['show'] ?? false);
         if (! $showCompleted) {
             $tasks = Manager::filterNotCompleted($tasks);
         }

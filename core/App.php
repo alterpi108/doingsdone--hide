@@ -135,6 +135,12 @@ class App
      */
     public static function saveFile()
     {
+        if (! array_key_exists('file', $_FILES) ||
+            ! array_key_exists('name', $_FILES['file']) ||
+            ! array_key_exists('tmp_name', $_FILES['file'])) {
+            static::error("Неправильно отправлен файл");
+        }
+
         $fileName = $_FILES['file']['name'];
         $src = $_FILES['file']['tmp_name'];
         $dst = __DIR__ . '/../public/userfiles/' . $fileName;

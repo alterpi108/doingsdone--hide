@@ -150,7 +150,7 @@ class ActionController {
     {
         App::loggedOnly();
 
-        if (! $_GET['id']) {
+        if (! array_key_exists('id', $_GET) || ! $_GET['id']) {
             App::error('Предоставьте ID');
         } else if (! Database::userHasTaskWithId(App::$userId, $_GET['id'])) {
             App::error('У вас нет такой задачи');

@@ -19,7 +19,14 @@ use App\Core\Request;
 // PHP and MySQL should be set to the same time zone
 //date_default_timezone_set('Europe/Moscow');
 
-session_start();
+
+//print(trim(null) === '');
+//
+//die();
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 Router::load('app/routes.php')
     ->direct(Request::uri(), Request::method());

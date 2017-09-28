@@ -53,7 +53,7 @@
                 <h2 class="content__main-heading">Список задач</h2>
 
                 <form class="search-form" action="/search" method="get">
-                    <input class="search-form__input" type="text" name="q" value="<?= htmlspecialchars($query) ?>" placeholder="Поиск по задачам">
+                    <input class="search-form__input" type="text" name="q" value="<?= htmlspecialchars($query ?? '') ?>" placeholder="Поиск по задачам">
                     <input class="search-form__submit" type="submit" name="" value="Искать">
                 </form>
 
@@ -99,7 +99,7 @@
                             <td class="task__file">
                                 <?php if ($task['file']): ?>
                                     <a class="download-link" href="/public/userfiles/<?= htmlspecialchars($task['file']) ?>">
-                                        <?= htmlspecialchars($task['file']) ?>)
+                                        <?= htmlspecialchars($task['file']) ?>
                                     </a>
                                 <?php endif; ?>
                             </td>

@@ -9,10 +9,10 @@
 
             <?php if (array_key_exists('name', $valid) && ! $valid['name']): ?>
                 <input class="form__input  form__input--error" type="text" name="name" id="name"
-                       value="<?= htmlspecialchars($value['name']) ?>" placeholder="Введите название">
+                       value="<?= htmlspecialchars($value['name'] ?? '') ?>" placeholder="Введите название">
             <?php else: ?>
                 <input class="form__input" type="text" name="name" id="name"
-                       value="<?= htmlspecialchars($value['name']) ?>" placeholder="Введите название">
+                       value="<?= htmlspecialchars($value['name'] ?? '') ?>" placeholder="Введите название">
             <?php endif; ?>
         </div>
 
@@ -31,10 +31,10 @@
 
             <?php if (array_key_exists('date', $valid) && ! $valid['date']): ?>
                 <input class="form__input form__input--date  form__input--error" type="text" name="date" id="date"
-                       value="<?= $value['date'] ?>" placeholder="Введите дату в формате ДД.ММ.ГГГГ">
+                       value="<?= $value['date'] ?? '' ?>" placeholder="Введите дату в формате ДД.ММ.ГГГГ">
             <?php else: ?>
                 <input class="form__input form__input--date" type="text" name="date" id="date"
-                       value="<?= $value['date'] ?>" placeholder="Введите дату в формате ДД.ММ.ГГГГ">
+                       value="<?= $value['date'] ?? '' ?>" placeholder="Введите дату в формате ДД.ММ.ГГГГ">
             <?php endif; ?>
         </div>
 
