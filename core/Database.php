@@ -363,7 +363,7 @@ class Database
      */
     public static function getOverdueTasks($userId, $projectId)
     {
-        $query = "SELECT * FROM task WHERE user=? AND project=? AND DATE(`deadline`)<CURDATE()";
+        $query = "SELECT * FROM task WHERE user=? AND project=? AND deadline < NOW()";
         $stm = static::$pdo->prepare($query);
         $stm->bindParam(1, $userId, PDO::PARAM_INT);
         $stm->bindParam(2, $projectId, PDO::PARAM_INT);
