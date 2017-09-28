@@ -25,11 +25,11 @@
 
                         <?php if (array_key_exists('email', $valid) && ! $valid['email']): ?>
                             <input class="form__input  form__input--error" type="text" name="email" id="email"
-                                   value="<?= $value['email'] ?>" placeholder="Введите e-mail">
+                                   value="<?= htmlspecialchars($value['email']) ?>" placeholder="Введите e-mail">
                             <p class="form__message">E-mail введён некорректно</p>
                         <?php else: ?>
                             <input class="form__input" type="text" name="email" id="email"
-                                   value="<?= $value['email'] ?>" placeholder="Введите e-mail">
+                                   value="<?= htmlspecialchars($value['email']) ?>" placeholder="Введите e-mail">
                         <?php endif; ?>
                     </div>
 
@@ -39,11 +39,11 @@
 
                         <?php if (array_key_exists('password', $valid) && ! $valid['password']): ?>
                             <input class="form__input  form__input--error" type="password" name="password" id="password"
-                                   value="<?= $value['password'] ?>" placeholder="Введите пароль">
+                                   value="" placeholder="Введите пароль">
                             <p class="form__message">Пароль введён некорректно</p>
                         <?php else: ?>
                             <input class="form__input" type="password" name="password" id="password"
-                                   value="<?= $value['password'] ?>" placeholder="Введите пароль">
+                                   value="" placeholder="Введите пароль">
                         <?php endif; ?>
                     </div>
 
@@ -53,11 +53,11 @@
 
                         <?php if (array_key_exists('name', $valid) && ! $valid['name']): ?>
                             <input class="form__input  form__input--error" type="text" name="name" id="name"
-                                   value="<?= $value['name'] ?>" placeholder="Введите имя">
+                                   value="<?= htmlspecialchars($value['name']) ?>" placeholder="Введите имя">
                             <p class="form__message">Имя введено некорректно</p>
                         <?php else: ?>
                             <input class="form__input" type="text" name="name" id="name"
-                                   value="<?= $value['name'] ?>" placeholder="Введите имя">
+                                   value="<?= htmlspecialchars($value['name']) ?>" placeholder="Введите имя">
                         <?php endif; ?>
                     </div>
 

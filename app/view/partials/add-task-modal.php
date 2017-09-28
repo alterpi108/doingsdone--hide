@@ -7,17 +7,13 @@
         <div class="form__row">
             <label class="form__label" for="name">Название <sup>*</sup></label>
 
-
-
             <?php if (array_key_exists('name', $valid) && ! $valid['name']): ?>
                 <input class="form__input  form__input--error" type="text" name="name" id="name"
-                       value="<?= $value['name'] ?>" placeholder="Введите название">
+                       value="<?= htmlspecialchars($value['name']) ?>" placeholder="Введите название">
             <?php else: ?>
                 <input class="form__input" type="text" name="name" id="name"
-                       value="<?= $value['name'] ?>" placeholder="Введите название">
+                       value="<?= htmlspecialchars($value['name']) ?>" placeholder="Введите название">
             <?php endif; ?>
-
-
         </div>
 
         <div class="form__row">
@@ -25,7 +21,7 @@
 
             <select class="form__input form__input--select" name="project" id="project">
                 <?php foreach ($projects as $project): ?>
-                    <option value="<?= $project['id'] ?>"><?= $project['name'] ?></option>
+                    <option value="<?= $project['id'] ?>"><?= htmlspecialchars($project['name']) ?></option>
                 <?php endforeach; ?>
             </select>
         </div>

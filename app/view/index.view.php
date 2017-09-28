@@ -16,7 +16,7 @@
                     </div>
 
                     <div class="user-menu__data">
-                        <p><?= $userName ?></p>
+                        <p><?= htmlspecialchars($userName) ?></p>
 
                         <a href="/logout">Выйти</a>
                     </div>
@@ -38,7 +38,7 @@
                             <?php endif; ?>
 
                                 <a class="main-navigation__list-item-link" href="/project/<?= $project['id'] ?>">
-                                    <?= $project['name'] ?>
+                                    <?= htmlspecialchars($project['name']) ?>
                                 </a>
                                 <span class="main-navigation__list-item-count"><?= $project['count'] ?></span>
                             </li>
@@ -53,7 +53,7 @@
                 <h2 class="content__main-heading">Список задач</h2>
 
                 <form class="search-form" action="/search" method="get">
-                    <input class="search-form__input" type="text" name="q" value="<?= $query ?>" placeholder="Поиск по задачам">
+                    <input class="search-form__input" type="text" name="q" value="<?= htmlspecialchars($query) ?>" placeholder="Поиск по задачам">
                     <input class="search-form__submit" type="submit" name="" value="Искать">
                 </form>
 
@@ -92,13 +92,15 @@
                                     <input class="checkbox__input visually-hidden" type="checkbox"
                                         onclick="completeTask(<?= $task['id'] ?>);"
                                         <?php if ($task['done']) echo 'checked'; ?>>
-                                    <span class="checkbox__text"><?= $task['name'] ?></span>
+                                    <span class="checkbox__text"><?= htmlspecialchars($task['name']) ?></span>
                                 </label>
                             </td>
 
                             <td class="task__file">
                                 <?php if ($task['file']): ?>
-                                    <a class="download-link" href="/public/userfiles/<?= $task['file'] ?>"><?= $task['file'] ?></a>
+                                    <a class="download-link" href="/public/userfiles/<?= htmlspecialchars($task['file']) ?>">
+                                        <?= htmlspecialchars($task['file']) ?>)
+                                    </a>
                                 <?php endif; ?>
                             </td>
 
